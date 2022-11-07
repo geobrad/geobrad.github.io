@@ -14,7 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: George Bradley
-email: george.bradley@gmail.com
+email: ""
 description: >- # this means to ignore newlines until "baseurl:"; description appears in Google search results and feed.xml site description
   George Bradley's personal website
 baseurl: "" # the subpath of your site, e.g. /blog
