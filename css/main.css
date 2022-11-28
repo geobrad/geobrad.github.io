@@ -1,0 +1,229 @@
+:root {
+    --body-width: 980px;
+}
+
+html {
+    height: 100%;
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.9), 
+            rgba(0, 0, 0, 0.2)
+        ),
+        url("/background.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #222;
+    
+}
+
+body {
+    /* height: 100%; */
+    width: var(--body-width);
+    margin: 0 auto;
+    color: #eee;
+    font-family: sans-serif;
+    /* min-height: 100%; */
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+header {
+    position: fixed;
+    width: var(--body-width);
+    display: flex;
+    align-items: center;
+}
+
+main {
+    /* flex: 1; */
+    min-height: 30em;
+}
+
+footer {
+    margin-top: auto;
+    bottom: 0;
+    text-align: center;
+    padding: 1em 0;
+    font-size: smaller;
+    /* font-weight: lighter; */
+}
+
+button, input[type=button] {
+    background: #ccc;
+    color: #222;
+    padding: 0.6em 1em;
+    border: none;
+    border-radius: 0.8em;
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+button.highlight, input[type=button].highlight {
+    font-weight: bolder;
+    background: #ff8;
+}
+
+button:active, input[type=button]:active {
+    background: #ddd;
+}
+
+button.highlight:active, input[type=button]:active {
+    background: #ff4;
+}
+
+nav {
+    margin-left: auto;
+    margin-right: 1em;
+    /* border: 1px solid white; */
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    padding-left: 1em;
+    padding-right: 1em;
+    border-left: 1px solid white;
+}
+
+nav li:first-child {
+    border-left: none;
+}
+
+nav a {
+    text-decoration: none;
+    color: inherit;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav a.selected {
+    color: white;
+    text-decoration: underline;
+}
+
+section {
+    display: none;
+}
+
+section h2:first-child {
+    margin-top: 0;
+}
+
+section.active {
+    display: initial;
+}
+
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    max-height: 100%;
+    overflow: scroll;
+    display: flex;
+}
+
+/* .mask.active {
+    display: flex;
+} */
+
+.dialog {
+    width: 40em;
+    padding: 3em;
+    border-radius: 3em;
+    background: rgba(0, 0, 0, 0.9);
+    margin: auto;
+    box-sizing: border-box;
+}
+
+label {
+    display: block;
+    margin-top: 1.2em;
+    margin-bottom: 0.2em;
+}
+
+input, textarea {
+    font: inherit;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    border: none;
+    resize: none;
+}
+
+.dialog .buttons {
+    text-align: right;
+    margin-top: 2em;
+    display: flex;
+    width: 100%;
+}
+
+.dialog .buttons button {
+    margin-left: 1.5em;
+}
+
+.dialog .buttons button:first-child {
+    margin-left: auto;
+}
+
+.dialog h2 {
+    margin-top: 0;
+}
+
+.g-recaptcha {
+    margin-top: 1.2em;
+}
+
+#contact-form textarea {
+    height: 5em;
+}
+
+#loading {
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000000;
+}
+
+#loading > div {
+    display: flex;
+    margin: auto;
+}
+
+#loading .spinner {
+    height: 0.1em;
+    width: 1em;
+    background: lightgray;
+    animation-name: spin;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+    100% { transform: rotate(180deg); }
+}
+
+h1 {
+    transition: 0.2s;
+}
+
+h1 img {
+    height: 2em;
+}
+
+h1.largeable.large {
+    transform: translate3d(calc(var(--body-width) / 2 - 50%), 8em, 0) scale(4);
+}

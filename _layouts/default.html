@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width initial-scale=1">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="canonical" href="https://gbrad.com/">
+        <title>George Bradley</title>
+        <meta name="description" content="Executive, engineer, husband, father in Melbourne, Australia">
+        
+        <!-- Load React -->
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <!-- <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script> -->
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <!-- <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script> -->
+        
+        <!-- Pre-load application modules for faster load time -->
+        <script src="/js/app.js" type="module"></script>
+        <script src="/js/store.js" type="module"></script>
+
+        <script id="readme" type="text/markdown" src="/README.md"></script>
+
+        <!-- Load Google ReCaptcha -->
+        <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
+    </head>
+    <body>
+        <div id="app-container"></div>
+        <script src="/js/main.js" type="module"></script>
+    </body>
+</html>
