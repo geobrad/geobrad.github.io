@@ -1,28 +1,35 @@
 const e = React.createElement;
 
 export const App = ({ state, dispatch }) => {
-    return e('div', {},
+    return e('div', {id: 'app', className: `${state.pageId == null ? 'cover ' : ' '} scroll-top`},
         state.loading ? e(Loader) : null,
         e('header', null,
-            e('h1', {className: state.pageId ? '' : 'largeable large'},
-                e('a', {href: '#', onClick: () => dispatch({type: 'navigate', pageId: null})},
-                    e('img', {src: "/images/logo-white.svg", alt: "George Bradley"})
-                )
+            e('div', {},
+                e('h1', {},
+                    e('a', {href: '#', onClick: () => dispatch({type: 'navigate', pageId: null})},
+                        e('img', {src: "/images/logo-white.svg", alt: "George Bradley"})
+                    )
+                ),
+                e(NavMenu, {activeId: state.pageId, navigate: (pageId) => {
+                    window.scrollTo(0, 0);
+                    dispatch({ type: 'navigate', pageId: pageId });
+                }}),
+                e('button', {className: 'highlight', onClick: () => dispatch({type: 'show-contact'})}, 'Get in touch'),
             ),
-            e(Menu, {navigate: (pageId) => dispatch({type: 'navigate', pageId: pageId})}),
-            e('button', {className: 'highlight', onClick: () => dispatch({type: 'show-contact'})}, 'Get in touch'),
         ),
         e('main', null,
-            state.pageId == 'about' ? e('section', {className: state.pageId == 'about' ? 'active' : ''},
-                e('h2', {}, e('a', {name: 'about'}, 'About me')),
+            state.pageId == null ? e('section', {},
+                e('h2', {}, 'etc...'),
             ) : null,
-            state.pageId == 'skills' ? e('section', {className: state.pageId == 'skills' ? 'active' : ''},
-                e('h2', {}, e('a', {name: 'about'}, 'Skills')),
+            state.pageId == 'about' ? e('section', {},
+                e('h2', {}, 'About me'),
             ) : null,
-            e('noscript', {}, 'This website requires JavaScript to function properly.'),
+            state.pageId == 'skills' ? e('section', {},
+                e('h2', {}, 'Skills'),
+            ) : null,
         ),
         e('footer', null,
-            "&copy; 2022 George Bradley"
+            "© 2022 George Bradley"
         ),
         state.modalId == 'contact-form' ? e(ContactForm, {
             submit: (ev) => {
@@ -38,31 +45,32 @@ export const App = ({ state, dispatch }) => {
 
 const Loader = () => e('div', {className: 'mask', id: 'loading'},
     e('div', null,
-        e('div', {className: 'spinner', style: {animationDelay: '000ms'}}),
-        e('div', {className: 'spinner', style: {animationDelay: '100ms'}}),
-        e('div', {className: 'spinner', style: {animationDelay: '200ms'}}),
-        e('div', {className: 'spinner', style: {animationDelay: '300ms'}}),
-        e('div', {className: 'spinner', style: {animationDelay: '400ms'}}),
-        e('div', {className: 'spinner', style: {animationDelay: '500ms'}}),
-        e('div', {className: 'spinner', style: {animationDelay: '600ms'}}),
-        e('div', {className: 'spinner', style: {animationDelay: '700ms'}}),
-        e('div', {className: 'spinner', style: {animationDelay: '800ms'}}),
-        e('div', {className: 'spinner', style: {animationDelay: '900ms'}}),
+        [...Array(10).keys()].map(
+            (i) => e('div', {className: 'spinner', style: {animationDelay: `${100 * i}ms`}, key: i})
+        )
     ),
 );
 
-const Menu = ({ navigate }) => e('nav', null,
+const NavMenu = ({ activeId, navigate }) => e('nav', null,
     e('ul', null,
-        e('li', null, e('a', {href: '#about', onClick: () => navigate('about')}, 'About')),
-        e('li', null, e('a', {href: '#skills', onClick: () => navigate('skills')}, 'Skills')),
-        e('li', null, e('a', {href: '#experience', onClick: () => navigate('experience')}, 'Experience')),
-        e('li', null, e('a', {href: '#projects', onClick: () => navigate('projects')}, 'Projects')),
-        e('li', null, e('a', {href: '#interests', onClick: () => navigate('interests')}, 'Interests')),
+        e(NavMenuItem, { id: 'about', label: 'About', activeId, navigate }),
+        e(NavMenuItem, { id: 'skills', label: 'Skills', activeId, navigate }),
+        e(NavMenuItem, { id: 'experience', label: 'Experience', activeId, navigate }),
+        e(NavMenuItem, { id: 'projects', label: 'Projects', activeId, navigate }),
+        e(NavMenuItem, { id: 'interests', label: 'Interests', activeId, navigate }),
     ),
 );
 
-const ContactForm = ({ submit, cancel }) => e('div', {className: 'mask'},
-    e('form', {className: 'dialog', onSubmit: submit},
+const NavMenuItem = ({ id, label, activeId, navigate }) => e('li', null,
+    e('a', {
+            className: activeId == id ? 'active' : '',
+            href: `#${id}`,
+            onClick: () => navigate(id)
+        }, label),
+);
+
+const ContactForm = ({ submit, cancel }) => e('div', {className: 'mask', onScroll: (ev) => {ev.stopPropagation();}},
+    e('form', {className: 'dialog', id: 'contact-form', onSubmit: submit},
         e('h2', {}, 'Send me a note'),
         e('label', {htmlFor: 'name'}, 'Name*'),
         e('input', {name: 'name', placeholder: 'How would you like me to address you?'}),

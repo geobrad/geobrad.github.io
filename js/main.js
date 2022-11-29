@@ -2,13 +2,6 @@ import * as Store from './store.js';
 import { App } from './app.js';
 
 
-function getFormEntries(form) {
-    const entries = {};
-    const formData = new FormData(form);
-    formData.forEach((value, key) => { entries[key] = value });
-    return entries;
-}
-
 function contactFormSubmitHandler(ev) {
     ev.preventDefault();
     const contact = document.getElementById('contact');
@@ -38,9 +31,9 @@ function contactFormSubmitHandler(ev) {
 
 function headingScrollHandler(ev) {
     if (window.scrollY > 10) {
-        document.querySelector('h1').classList.remove('large');
+        document.getElementById('app').classList.remove('scroll-top');
     } else {
-        document.querySelector('h1').classList.add('large');
+        document.getElementById('app').classList.add('scroll-top');
     }
 }
 

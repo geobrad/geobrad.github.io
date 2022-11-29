@@ -3,7 +3,7 @@ const listeners = [];
 const CONTACT_FORM_URL = 'https://tibe4cjvlaa6n3uiigneprp35q0tdyhc.lambda-url.ap-southeast-2.on.aws/';
 
 export let state = {
-    pageId: window.location.hash || null,
+    pageId: window.location.hash.substring(1) || null,
     modalId: null,
     loading: true,
 }
