@@ -15,7 +15,7 @@ export const App = ({ state, dispatch }) => {
                 e('div', {className: 'left', style: {display: 'flex'}},
                     e(NavMenuIcon),
                     e('h1', {},
-                        e('a', {href: '#', onClick: () => dispatch({type: 'navigate', pageId: null})},
+                        e('a', { href: '#', onClick: () => navigate(null) },
                             e('img', {src: "/images/logo-white.svg", alt: "George Bradley - Home"})
                         ),
                     ),

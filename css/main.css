@@ -98,6 +98,7 @@ button.highlight:active, input[type=button]:active {
 
 .left {
     display: flex;
+    align-items: center;
 }
 
 .right {
@@ -291,7 +292,7 @@ h1 img {
     nav.inline { display: none }
     nav ul { flex-direction: column }
     nav.dropdown.active { display: initial }
-    #nav-menu-icon { display: initial }
+    #nav-menu-icon { display: block }
     .dialog {
         width: var(--content-width);
         /* height: 100vh; */
