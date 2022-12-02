@@ -297,6 +297,7 @@ h1 img {
         width: var(--content-width);
         /* height: 100vh; */
         border-radius: 1em;
+        padding: 1em;
     }
 }
 
