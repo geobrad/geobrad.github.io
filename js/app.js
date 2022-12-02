@@ -87,6 +87,7 @@ const ContactForm = ({ submit, cancel }) => {
     React.useEffect(() => {
         grecaptcha.render(document.querySelector('.g-recaptcha'));
     }, []); // Empty array tells React to run only once (not on re-renders).
+    
     return e('div', {className: 'mask'},
         e('form', {className: 'dialog', id: 'contact-form', onSubmit: submit},
             e('h2', {}, 'Send me a note'),
@@ -103,7 +104,7 @@ const ContactForm = ({ submit, cancel }) => {
             ),
         ),
     );
-}
+};
 
 const ContactSuccess = ({ dispatch }) => e(MessageBox, { dispatch },
     e('h2', null, 'Note sent'),
