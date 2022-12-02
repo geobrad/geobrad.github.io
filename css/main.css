@@ -152,9 +152,9 @@ nav.dropdown li:first-child a {
 #nav-menu-icon {
     display: none;
     vertical-align: middle;
-    width: 3em;
+    width: 32px;
     /* margin-left: 1em; */
-    margin-right: 2em;
+    margin-right: 24px;
 }
 
 nav a {
@@ -270,7 +270,7 @@ input:not([type]), input[type=text], input[type=password], textarea {
 }
  */
 h1 img {
-    height: 2em;
+    width: 140px;
     vertical-align: middle;
 }
 
