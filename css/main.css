@@ -295,9 +295,8 @@ h1 img {
     #nav-menu-icon { display: block }
     .dialog {
         width: var(--content-width);
-        /* height: 100vh; */
         border-radius: 1em;
-        padding: 1em;
+        padding: 1.5em;
     }
 }
 
