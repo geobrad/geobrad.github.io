@@ -9,33 +9,21 @@ export const App = ({ state, dispatch }) => {
     
     return e('div', {id: 'app', className: `${state.pageId == null ? 'cover' : ''} ${state.modalId != null || state.loading ? 'masked' : ''} scroll-top`},
         state.loading ? e(Loader) : null,
-        e('header', null,
-            // e('div', {id: 'header-background'}),
-            e('div', {id: 'header-content'},
-                e('div', {className: 'left', style: {display: 'flex'}},
-                    e(NavMenuIcon),
-                    e('h1', {},
-                        e('a', { href: '#', onClick: () => navigate(null) },
-                            e('img', {src: "/images/logo-white.svg", alt: "George Bradley - Home"})
-                        ),
-                    ),
-                ),
-                e('div', {className: 'right'},
-                    e(NavMenu, {dropdown: false, activePageId: state.pageId, navigate}),
-                    e('button', {className: 'highlight', onClick: () => dispatch({type: 'show-contact'})}, 'Get in touch'),
-                )
-            ),
-            e(NavMenu, {dropdown: true, activePageId: state.pageId, navigate}),
+        e(Header),
+        // state.pageId == null ? e('main', {},
+        //     e('div', {className: 'title'}, e('h2', {}, 'etc...')),
+        // ) : null,
+        // state.pageId == 'about' ? e('main', {},
+        //     e('h2', {}, 'About me'),
+        // ) : null,
+        // state.pageId == 'skills' ? e('main', {},
+        //     e('h2', {}, 'Skills'),
+        // ) : null,
+        e('main', {},
+            e(CoverSection),
+            e(BlurbSection),
+            e(ContactSection),
         ),
-        state.pageId == null ? e('main', {},
-            e('h2', {}, 'etc...'),
-        ) : null,
-        state.pageId == 'about' ? e('main', {},
-            e('h2', {}, 'About me'),
-        ) : null,
-        state.pageId == 'skills' ? e('main', {},
-            e('h2', {}, 'Skills'),
-        ) : null,
         e(Footer),
         state.modalId == 'contact-form' ? e(ContactForm, {
             submit: (ev) => {
@@ -87,7 +75,7 @@ const ContactForm = ({ submit, cancel }) => {
     React.useEffect(() => {
         grecaptcha.render(document.querySelector('.g-recaptcha'));
     }, []); // Empty array tells React to run only once (not on re-renders).
-    
+
     return e('div', {className: 'mask'},
         e('form', {className: 'dialog', id: 'contact-form', onSubmit: submit},
             e('h2', {}, 'Send me a note'),
@@ -124,6 +112,40 @@ const MessageBox = ({ dispatch, children }) => e('div', {className: 'mask'},
         children,
         e('button', {onClick: () => dispatch({ type: 'close-dialog' })}, 'Okay'),
     ),
+);
+
+const Header = () => e('header', null,
+    // e('div', {id: 'header-background'}),
+    e('div', {id: 'header-content'},
+        e('div', {className: 'left', style: {display: 'flex'}},
+            // e(NavMenuIcon),
+            e('h1', {},
+                e('a', { href: '#top' },
+                    e('img', {src: "/images/logo-white.svg", alt: "George Bradley - Home"})
+                ),
+            ),
+        ),
+        e('div', {className: 'right'},
+            e('a', { href: '#contact', className: 'buttonlike highlight' }, 'Get in touch'),
+            // e(NavMenu, {dropdown: false, activePageId: state.pageId, navigate}),
+            // e('button', {className: 'highlight', onClick: () => dispatch({type: 'show-contact'})}, 'Get in touch'),
+        )
+    ),
+    // e(NavMenu, {dropdown: true, activePageId: state.pageId, navigate}),
+);
+
+const CoverSection = () => e('section', null,
+    e('div', { className: 'cover' },
+        e('div', null, // cover content
+            e('h2', {}, 'COVER!'),
+        ),
+    ),
+);
+
+const BlurbSection = () => e('section', null,
+);
+
+const ContactSection = () => e('section', null,
 );
 
 const Footer = () => e('footer', null,

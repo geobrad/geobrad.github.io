@@ -44,6 +44,7 @@ function renderApp() {
 
 function init() {
     Store.dispatch({type: 'init'});
+    Store.dispatch({type: 'contact-success'});
 }
 
 
