@@ -1,9 +1,14 @@
 :root {
-    --content-width: calc(100vw - 2em);
-}    
-    
+    --wide-width: calc(100vw - 40px);
+    --narrow-width: calc(100vw - 40px);
+}
+
+@media (min-width: 760px) {
+    :root {--narrow-width: 720px}
+}
+
 @media (min-width: 992px) {
-    :root {--content-width: 980px;}
+    :root {--wide-width: 960px;}
 }
 
 html {
@@ -16,62 +21,66 @@ body {
     font-family: sans-serif;
 }
 
-/* #app.masked {
-    overflow: hidden;
-} */
-
 header {
-    position: fixed;
+    position: absolute;
     width: 100%;
     padding-bottom: 1em;
     z-index: 1;
-    background: linear-gradient(#111a, #1118 80%, #0000);
+    background: linear-gradient(#111e, #1118 80%, #0000);
 }
-
-/* #app.scroll-top #header-background {
-    opacity: 0;
-}
-
-#header-background {
-    transition: opacity 0.5s;
-    background: linear-gradient(#111a, #1118 80%, #0000);
-    height: 7em;
-    width: 100%;
-    position: absolute;
-} */
 
 #header-content {
-    width: var(--content-width);
+    width: var(--wide-width);
     display: flex;
     align-items: center;
     margin: 0 auto;
     position: relative;
 }
 
-main {
-    min-height: 100vh;
-    padding-top: 8em;
-    width: var(--content-width);
-    margin: 0 auto;
+section.cover {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-div.title {
-    height: 100%;
-    background-image: linear-gradient(#111c, #111b), url("/background.jpg");
-    /* background-attachment: fixed; */
-    /* background-position: top center; */
+#title-section {
+    height: 35em;
+    /* align-items: flex-end; */
+    /* padding-bottom: 3em; */
+    background-image: linear-gradient(#111b, #111b), url("/images/pexels-james-wheeler-1598075.jpg");
     background-size: cover;
-    /* background-repeat: no-repeat; */
+    background-position: center;
+    color: #fff;
+}
+
+#title-section div {
+    /* margin-top: 20%; */
+    font-family: serif;
+    /* font-weight: bold; */
+    width: 80%;
+    font-size: 200%;
+    font-style: italic;
+    /* margin-right: 50%; */
+    text-align: center;
+    /* padding-bottom: 1em; */
+    /* line-height: 1.6em; */
+    /* border: 1px solid green; */
+}
+
+h2, form {
+    width: var(--narrow-width);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 footer {
-    margin-top: auto;
-    bottom: 0;
+    width: var(--wide-width);
     text-align: center;
-    padding: 1em 0;
+    margin: 3em auto 0 auto;
+    padding: 1em;
     font-size: smaller;
-    width: var(--content-width);
-    margin: 0 auto;
+    border-top: 1px solid #444;
 }
 
 a.buttonlike, button, input[type=button] {
@@ -184,7 +193,7 @@ nav a.active {
     bottom: 0;
     right: 0;
     align-items: center;
-    background: #111a;
+    background: #111c;
     /* max-height: 100%; */
     overflow: scroll;
     display: flex;
@@ -304,3 +313,11 @@ h1 img {
     }
 }
 
+form .buttons {
+    margin-top: 1em;
+}
+
+h2 {
+    margin-top: 2em;
+    text-transform: uppercase;
+}

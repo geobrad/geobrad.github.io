@@ -7,7 +7,7 @@ export const App = ({ state, dispatch }) => {
         dispatch({ type: 'navigate', pageId: pageId });
     };
     
-    return e('div', {id: 'app', className: `${state.pageId == null ? 'cover' : ''} ${state.modalId != null || state.loading ? 'masked' : ''} scroll-top`},
+    return e('div', {id: 'app', className: `${state.pageId == null ? 'cover' : ''} ${state.modalId != null || state.loading ? 'masked' : ''}`},
         state.loading ? e(Loader) : null,
         e(Header),
         // state.pageId == null ? e('main', {},
@@ -20,18 +20,24 @@ export const App = ({ state, dispatch }) => {
         //     e('h2', {}, 'Skills'),
         // ) : null,
         e('main', {},
-            e(CoverSection),
+            e(TitleSection),
             e(BlurbSection),
-            e(ContactSection),
+            e(ContactSection, {
+                submit: (ev) => {
+                    ev.preventDefault();
+                    dispatch({type: 'contact-submit', form: ev.target})
+                },
+                cancel: () => dispatch({type: 'contact-cancel'}),
+            }),
         ),
         e(Footer),
-        state.modalId == 'contact-form' ? e(ContactForm, {
-            submit: (ev) => {
-                ev.preventDefault();
-                dispatch({type: 'contact-submit', form: ev.target})
-            },
-            cancel: () => dispatch({type: 'contact-cancel'}),
-        }) : null,
+        // state.modalId == 'contact-form' ? e(ContactForm, {
+        //     submit: (ev) => {
+        //         ev.preventDefault();
+        //         dispatch({ type: 'contact-submit', form: ev.target })
+        //     },
+        //     cancel: () => dispatch({ type: 'contact-cancel' }),
+        // }) : null,
         state.modalId == 'contact-success' ? e(ContactSuccess, { dispatch }) : null,
         state.modalId == 'contact-error' ? e(ContactError, { dispatch }) : null,
     );
@@ -71,35 +77,12 @@ const NavMenuIcon = () => e('input', {
     onClick: () => document.querySelector('nav.dropdown').classList.toggle('active'),
 });
 
-const ContactForm = ({ submit, cancel }) => {
-    React.useEffect(() => {
-        grecaptcha.render(document.querySelector('.g-recaptcha'));
-    }, []); // Empty array tells React to run only once (not on re-renders).
-
-    return e('div', {className: 'mask'},
-        e('form', {className: 'dialog', id: 'contact-form', onSubmit: submit},
-            e('h2', {}, 'Send me a note'),
-            e('label', {htmlFor: 'name'}, 'Name*'),
-            e('input', {name: 'name', placeholder: 'What shall I call you?'}),
-            e('label', {htmlFor: 'email-or-phone'}, 'Email/Phone*'),
-            e('input', {name: 'email-or-phone', placeholder: 'How shall I reach you?'}),
-            e('label', {htmlFor: 'message'}, 'Note*'),
-            e('textarea', {name: 'message', placeholder: 'What can I do for you?'}),
-            e('div', {className: 'g-recaptcha', 'data-theme': 'dark', 'data-sitekey': '6LfQyRojAAAAAAW4q7PYkfBmgNMPetdYNx6VS5iU'}),
-            e('div', {className: 'buttons'},
-                e('button', {type: 'button', onClick: cancel}, 'Cancel'),
-                e('button', {className: 'highlight'}, 'Send'),
-            ),
-        ),
-    );
-};
-
 const ContactSuccess = ({ dispatch }) => e(MessageBox, { dispatch },
-    e('h2', null, 'Note sent'),
-    e('p', null, [
-            'Thank you for getting in touch.',
+    e('h2', null, 'Message sent'),
+    e('p', null,
+            'Thank you for getting in touch. ',
             'I will endeavour to get back to you as quickly as I can.'
-        ].join(' ')),
+        ),
 );
 
 const ContactError = ({ dispatch }) => e(MessageBox, { dispatch },
@@ -134,20 +117,42 @@ const Header = () => e('header', null,
     // e(NavMenu, {dropdown: true, activePageId: state.pageId, navigate}),
 );
 
-const CoverSection = () => e('section', null,
-    e('div', { className: 'cover' },
-        e('div', null, // cover content
-            e('h2', {}, 'COVER!'),
-        ),
+const TitleSection = () => e('section', { id: 'title-section', className: 'cover' },
+    e('div', null, // cover content
+        'Delivering real-world value through technology.', e('br'),
+        // 'Delivery.', e('br'),
     ),
 );
 
 const BlurbSection = () => e('section', null,
 );
 
-const ContactSection = () => e('section', null,
+const ContactSection = ({ submit }) => e('section', {},
+    e(SectionHeading, { name: 'contact', text: 'Get in touch' }),
+    e('form', { id: 'contact-form', onSubmit: submit },
+        e(TextInput, { name: 'name', label: 'Your name' }),
+        e(TextInput, { name: 'email-or-phone', label: 'Your email/phone' }),
+        e(TextAreaInput, { name: 'message', label: 'What can I do for you?' }),
+        e('div', { className: 'g-recaptcha', 'data-theme': 'dark', 'data-sitekey': '6LfQyRojAAAAAAW4q7PYkfBmgNMPetdYNx6VS5iU' }),
+        e('div', { className: 'buttons' },
+            // e('button', {type: 'button', onClick: cancel}, 'Cancel'),
+            e('button', { className: 'highlight' }, 'Send'),
+        ),
+    ),
 );
 
 const Footer = () => e('footer', null,
-    "© 2022 George Bradley"
+    "© 2023 George Bradley"
+);
+
+const SectionHeading = ({ name, text }) => e('h2', {}, e('a', { name }, text));
+
+const TextInput = ({ name, label, placeholder }) => e('div', null,
+    e('label', { htmlFor: name }, label),
+    e('input', { name, placeholder }),
+);
+
+const TextAreaInput = ({ name, label, placeholder }) => e('div', null,
+    e('label', { htmlFor: name }, label),
+    e('textarea', { name, placeholder }),
 );

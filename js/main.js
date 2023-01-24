@@ -30,10 +30,10 @@ function contactFormSubmitHandler(ev) {
 }
 
 function headingScrollHandler(ev) {
-    if (window.scrollY > 10) {
-        document.getElementById('app').classList.remove('scroll-top');
+    if (window.scrollY < 10) {
+        document.getElementById('app').classList.remove('scrolled');
     } else {
-        document.getElementById('app').classList.add('scroll-top');
+        document.getElementById('app').classList.add('scrolled');
     }
 }
 
@@ -43,8 +43,7 @@ function renderApp() {
 }
 
 function init() {
-    Store.dispatch({type: 'init'});
-    Store.dispatch({type: 'contact-success'});
+    Store.dispatch({ type: 'init' });
 }
 
 

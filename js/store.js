@@ -28,7 +28,10 @@ function apply(state, action) {
             };
         case 'contact-submit':
             submitForm(action.form)
-                .then(() => dispatch({type: 'contact-success'}))
+                .then(() => {
+                        action.form.reset();
+                        return dispatch({type: 'contact-success'});
+                    })
                 .catch(() => dispatch({ type: 'contact-error' }));
             return {
                 ...state,
