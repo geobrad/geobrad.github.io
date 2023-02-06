@@ -1,14 +1,15 @@
 :root {
-    --wide-width: calc(100vw - 80px);
-    --narrow-width: calc(100vw - 80px);
+    --min-side-margin: 25px;
+    --wide-width: calc(100vw - 2 * var(--min-side-margin));
+    --narrow-width: calc(100vw - 2 * var(--min-side-margin));
 }
 
 @media (min-width: 760px) {
-    :root {--narrow-width: 680px}
+    :root {--narrow-width: calc(760px - 2 * var(--min-side-margin))}
 }
 
 @media (min-width: 992px) {
-    :root {--wide-width: 912px;}
+    :root {--wide-width: calc(992px - 2 * var(--min-side-margin))}
 }
 
 html {
