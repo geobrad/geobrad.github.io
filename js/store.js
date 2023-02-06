@@ -6,6 +6,7 @@ export let state = {
     pageId: window.location.hash.substring(1) || null,
     modalId: null,
     loading: true,
+    contactFormEnabled: false,
 }
 
 function apply(state, action) {
@@ -58,6 +59,16 @@ function apply(state, action) {
             return {
                 ...state,
                 modalId: null,
+            };
+        case 'contact-enable':
+            return state.contactFormEnabled ? state : {
+                ...state,
+                contactFormEnabled: true,
+            };
+        case 'contact-disable':
+            return !state.contactFormEnabled ? state : {
+                ...state,
+                contactFormEnabled: false,
             };
         default:
             throw new Error(`Unrecognized action type: ${action.type}`);

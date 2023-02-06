@@ -1,12 +1,28 @@
 const e = React.createElement;
 
+const revalidateContactForm = (dispatch) => {
+    const fields = document.getElementById('contact-form').elements;
+    if (true
+        && fields['name'].value.trim().length > 0
+        && fields['email-or-phone'].value.trim().length > 0
+        && fields['message'].value.trim().length > 0
+        && grecaptcha.getResponse().length > 0
+    ) {
+        dispatch({type: 'contact-enable'});
+    } else {
+        dispatch({type: 'contact-disable'});
+    }
+};
+
 export const App = ({ state, dispatch }) => {
     const navigate = (pageId) => {
         window.scrollTo(0, 0);
         document.querySelector('nav.dropdown').classList.remove('active');
         dispatch({ type: 'navigate', pageId: pageId });
     };
-    
+
+    window.onGRecaptchaChange = () => revalidateContactForm(dispatch);
+
     return e('div', {id: 'app', className: `${state.pageId == null ? 'cover' : ''} ${state.modalId != null || state.loading ? 'masked' : ''}`},
         state.loading ? e(Loader) : null,
         e(Header),
@@ -23,11 +39,12 @@ export const App = ({ state, dispatch }) => {
             e(TitleSection),
             e(BlurbSection),
             e(ContactSection, {
-                submit: (ev) => {
+                isEnabled: state.contactFormEnabled,
+                submitHandler: (ev) => {
                     ev.preventDefault();
                     dispatch({type: 'contact-submit', form: ev.target})
                 },
-                cancel: () => dispatch({type: 'contact-cancel'}),
+                changeHandler: (ev) => revalidateContactForm(dispatch),
             }),
         ),
         e(Footer),
@@ -124,19 +141,37 @@ const TitleSection = () => e('section', { id: 'title-section', className: 'cover
     ),
 );
 
-const BlurbSection = () => e('section', null,
+const BlurbSection = () => e('section', {className: 'narrow'},
+    e('p', {}, '\
+        I am a seasoned software development manager with 10 years\' experience managing software development teams and products. \
+        A veteran in running agile software development processes, \
+        my broad technical background encompasses enterprise SaaS applications, \
+        industrial machinery automation systems, advanced mathematical optimisation engines and more. \
+    '),
+    e('p', {}, '\
+        My professional passion is in building and leading teams to create outsized business value through well-designed software technology. \
+        In my spare time I enjoy skiing, running, cycling, spending time with my family and experimenting with machine learning algorithms.\
+    '),
 );
 
-const ContactSection = ({ submit }) => e('section', {},
+const ContactSection = ({ isEnabled, submitHandler, changeHandler }) => e('section', {className: 'narrow'},
     e(SectionHeading, { name: 'contact', text: 'Get in touch' }),
-    e('form', { id: 'contact-form', onSubmit: submit },
-        e(TextInput, { name: 'name', label: 'Your name' }),
-        e(TextInput, { name: 'email-or-phone', label: 'Your email/phone' }),
-        e(TextAreaInput, { name: 'message', label: 'What can I do for you?' }),
-        e('div', { className: 'g-recaptcha', 'data-theme': 'dark', 'data-sitekey': '6LfQyRojAAAAAAW4q7PYkfBmgNMPetdYNx6VS5iU' }),
+    e('p', {}, '\
+        If you\'d like to reach out, please provide your details and let me know how I can help in the form below.\
+    '),
+    e('form', { id: 'contact-form', onSubmit: submitHandler, onChange: changeHandler },
+        e(TextInput, { name: 'name', label: 'Name*' }),
+        e(TextInput, { name: 'email-or-phone', label: 'Email/phone*' }),
+        e(TextAreaInput, { name: 'message', label: 'What can I do for you?*' }),
+        e('div', {
+            className: 'g-recaptcha',
+            'data-sitekey': '6LfQyRojAAAAAAW4q7PYkfBmgNMPetdYNx6VS5iU',
+            'data-theme': 'dark',
+            'data-callback': 'onGRecaptchaChange',
+            'data-expired-callback': 'onGRecaptchaChange',
+         }),
         e('div', { className: 'buttons' },
-            // e('button', {type: 'button', onClick: cancel}, 'Cancel'),
-            e('button', { className: 'highlight' }, 'Send'),
+            e('button', { className: 'highlight', ...(!isEnabled && { disabled: true, title: 'Please complete all fields marked with an asterisk and confirm you are not a robot.' }) }, 'Send'),
         ),
     ),
 );

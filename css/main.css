@@ -1,14 +1,14 @@
 :root {
-    --wide-width: calc(100vw - 40px);
-    --narrow-width: calc(100vw - 40px);
+    --wide-width: calc(100vw - 80px);
+    --narrow-width: calc(100vw - 80px);
 }
 
 @media (min-width: 760px) {
-    :root {--narrow-width: 720px}
+    :root {--narrow-width: 680px}
 }
 
 @media (min-width: 992px) {
-    :root {--wide-width: 960px;}
+    :root {--wide-width: 912px;}
 }
 
 html {
@@ -19,6 +19,7 @@ body {
     margin: 0 auto;
     color: #eee;
     font-family: sans-serif;
+    line-height: 1.6;
 }
 
 header {
@@ -48,10 +49,11 @@ section.cover {
     height: 35em;
     /* align-items: flex-end; */
     /* padding-bottom: 3em; */
-    background-image: linear-gradient(#111b, #111b), url("/images/pexels-james-wheeler-1598075.jpg");
+    background-image: linear-gradient(#1118, #1118), url("/images/pexels-james-wheeler-1598075.jpg");
     background-size: cover;
     background-position: center;
     color: #fff;
+    margin-bottom: 3em;
 }
 
 #title-section div {
@@ -68,11 +70,11 @@ section.cover {
     /* border: 1px solid green; */
 }
 
-h2, form {
+/* h2, form {
     width: var(--narrow-width);
     margin-left: auto;
     margin-right: auto;
-}
+} */
 
 footer {
     width: var(--wide-width);
@@ -106,6 +108,11 @@ a.buttonlike:active, button:active, input[type=button]:active {
 
 a.buttonlike.highlight:active, button.highlight:active, input[type=button]:active {
     background: #ff4;
+}
+
+a.buttonlike.disabled, button[disabled], input[type=button][disabled] {
+    color: #888;
+    cursor: not-allowed;
 }
 
 .left {
@@ -182,9 +189,12 @@ nav a.active {
     text-decoration: underline double;
 }
 
-/* main h2:first-child {
-    margin-top: 0;
-} */
+.narrow {
+    width: var(--narrow-width);
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: visible;
+}
 
 .mask {
     position: fixed;
